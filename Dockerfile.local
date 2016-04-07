@@ -64,13 +64,13 @@ RUN 	apt-get -qq install -y --no-install-recommends \
 RUN if [ -f "/etc/apt/apt.conf.d/30proxy" ]; then rm /etc/apt/apt.conf.d/30proxy; fi
 
 # If running from a local server you might use pip2pi to build a "simple" cache in ./pip
-# COPY 	pip /tmp/pip/
-# RUN 	ls -l /tmp/pip
-# COPY 	requirements.txt /tmp/requirements.txt 
-# RUN	pip install --index-url=file:///tmp/pip/simple/ -r /tmp/requirements.txt
+COPY 	pip /tmp/pip/
+RUN 	ls -l /tmp/pip
+COPY 	requirements.txt /tmp/requirements.txt 
+RUN	pip install --index-url=file:///tmp/pip/simple/ -r /tmp/requirements.txt
 
 # Running from elsewhere
-RUN	pip install -r /tmp/requirements.txt
+# RUN	pip install -r /tmp/requirements.txt
 
 RUN sed -i 's/Image.fromstring/Image.frombytes/' /usr/local/lib/python2.7/dist-packages/TileStache/Mapnik.py
 RUN sed -i 's/Image.fromstring/Image.frombytes/' /usr/local/lib/python2.7/dist-packages/TileStache/Pixels.py
